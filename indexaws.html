@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chalice_bot_App</title>
+</head>
+<body>
+    <h1>Chalice_bot_App</h1>
+    <textarea id="input-text" rows="4" cols="50" placeholder="Type your input here..."></textarea>
+    <br>
+    <button onclick="sendRequest()">Submit</button>
+    <br>
+    <h2>Response:</h2>
+    <div id="response"></div>
+
+    <script>
+        function sendRequest() {
+            let inputText = document.getElementById('input-text').value;
+
+            fetch('http://chalicebot346.duckdns.org:5000/generate', { // Use your DuckDNS domain name here
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: 'input_text=' + encodeURIComponent(inputText)
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('response').innerText = data.response;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>
